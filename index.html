@@ -7,7 +7,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
 
-    <script src="./JS/app.js"></script>
+    <!-- <script src="./JS/app.js"></script> -->
+
+    <style>
+        div{
+            background-color: #91C483;
+            width: 350px;
+            height: 350px;
+        }
+        img{
+            display: block;
+            border-radius: 8px;
+            width: 200px;
+            height: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        p{
+            text-align: center;
+            color:#EEEEEE;
+        }
+        header{
+            color: #EEEEEE;
+            text-align: center;
+            background-color: #FAEEE7;
+        }
+        footer{
+            text-align: center;
+            background-color:#FAEEE7 ;
+        }
+    </style>
 
 </head>
 
@@ -16,7 +45,70 @@
         <a href="#"> home</a>
         <a href="./accounting.html"> accounting</a>
     </header>
+
+
     <main>
+
+        <section>
+            <h2> Add a employee : </h2>
+
+            
+
+
+                <fieldset>
+                    <form id="employeeForm">
+
+                    <legend>add new employee</legend>
+                    <label for="name">Full name:</label>
+                    <input type="text" name="name" id="name" required />
+                    <br />
+                    <br />
+                    <label for="ingredients" required>Department</label>
+
+                    <select id="department" name="department">
+                        <option value="administration">Administration</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="development">Development</option>
+                        <option value="finance">Finance</option>
+                    </select>
+                    <br />
+                    <br />
+                    <label for="level">Level</label>
+                    <select id="level" name="level">
+                        <option value="Junior">Junior</option>
+                        <option value="Mid-Senior">Mid-Senior</option>
+                        <option value="Senior">Senior</option>
+                    </select>
+                    <br />
+                    <br />
+                    <label for="imgurl">image url</label>
+                    <input type="text" name="imgurl" id="imgurl" />
+                    <br />
+                    <br />
+                    <input type="submit" value="add new employee" />
+                
+            </form>
+        </fieldset>
+        </section>
+        <section>
+            <h2> Employee info: </h2>
+            <!-- <div>
+                <h4>Americano</h4>
+                <p>Americano is available Hot and Cold and it has the following ingredients :</p>
+                <ul>
+                    <li>
+                        espresso
+                    </li>
+                    <li>
+                        Hot water
+                    </li>
+                </ul>
+                <img src="./images/americano.PNG" alt="Americano">
+            </div> -->
+        </section>
+        <section id="employee">
+
+        </section>
 
     </main>
     <footer>
@@ -24,7 +116,7 @@
         <a href="#"> twitter</a>
 
     </footer>
-
+    <script src="./JS/app.js"></script>
 </body>
 
 </html>
