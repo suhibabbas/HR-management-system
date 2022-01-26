@@ -5,12 +5,12 @@
 let employeeForm = document.getElementById('employeeForm');
 let employeeSec = document.getElementById('employee');
 
-function employee(employeeID, fullName, department, level, salary) {
+function employee(employeeID, fullName, department, level,imgurl, salary) {
     this.employeeID = employeeID;
     this.fullName = fullName;
     this.department = department;
     this.level = level;
-    this.imagePath = `./pic/${this.fullName}.jpg`;
+    this.imgurl = imgurl  //`./pic/${this.fullName}.jpg`;
     this.salary = salary;
 }
 
@@ -39,9 +39,13 @@ employee.prototype.render = function () {
 
     let img = document.createElement('img');
     div.appendChild(img);
-    img.setAttribute('src',this.imagePath);
+    if(this.imgurl != ''){
+    img.setAttribute('src',this.imgurl);
     img.setAttribute('alt',this.fullName);
-
+    }else{
+        img.setAttribute('src',`./pic/${this.fullName}.jpg`);
+        img.setAttribute('alt',this.fullName);
+    }
     let p = document.createElement('p');
     div.appendChild(p);
     p.textContent = `Name: ${this.fullName} - ID: ${this.employeeID}`
@@ -66,9 +70,11 @@ function handelSubmit(event){
 
     let department = event.target.department.value;
 
-     let level = event.target.level.value;
+    let level = event.target.level.value;
     
-    let newEmplouee = new employee(0,fullName, department, level);
+    let imgurl = event.target.imgurl.value;
+
+    let newEmplouee = new employee(0,fullName, department, level, imgurl);
 
     newEmplouee.newEmployeeID();
     newEmplouee.newSalary();
