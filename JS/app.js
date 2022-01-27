@@ -3,9 +3,14 @@
 
 
 let employeeForm = document.getElementById('employeeForm');
-let employeeSec = document.getElementById('employee');
+let eemployeeSection = document.getElementById('employeeSection');
 
-function employee(employeeID, fullName, department, level,imgurl, salary) {
+
+let employees =[];
+checkLocalAndPush();
+
+
+function employee(employeeID, fullName, department, level, imgurl, salary) {
     this.employeeID = employeeID;
     this.fullName = fullName;
     this.department = department;
@@ -14,9 +19,13 @@ function employee(employeeID, fullName, department, level,imgurl, salary) {
     this.salary = salary;
 }
 
-employee.prototype.newEmployeeID = function(){
-    this.employeeID = getRndInteger(1000,9999);
+
+
+employee.prototype.newEmployeeID = function () {
+    this.employeeID = getRndInteger(1000, 9999);
 }
+
+
 
 employee.prototype.newSalary = function () {
     // let clSalary;
@@ -32,38 +41,47 @@ employee.prototype.newSalary = function () {
 }
 
 
-employee.prototype.render = function () {
+
+
+function render(employeeFromLS) {
     // document.write(`<p> ${this.fullName} the salary: ${this.newSalary()} </p>`)
+
+    employeeSection.innerHTML ='';
+
+    for(let i = 0 ; i < employeeFromLS.length ; i++){
+        let emplo = employeeFromLS [i];
+
     let div = document.createElement('div');
-    employeeSec.appendChild(div);
+    eemployeeSection.appendChild(div);
 
     let img = document.createElement('img');
     div.appendChild(img);
-    if(this.imgurl != ''){
-    img.setAttribute('src',this.imgurl);
-    img.setAttribute('alt',this.fullName);
-    }else{
-        img.setAttribute('src',`./pic/${this.fullName}.jpg`);
-        img.setAttribute('alt',this.fullName);
+
+    if (emplo.imgurl != '') {
+        img.setAttribute('src', emplo.imgurl);
+        img.setAttribute('alt', emplo.fullName);
+    } else {
+        img.setAttribute('src', `./pic/${emplo.fullName}.jpg`);
+        img.setAttribute('alt', emplo.fullName);
     }
     let p = document.createElement('p');
     div.appendChild(p);
-    p.textContent = `Name: ${this.fullName} - ID: ${this.employeeID}`
+    p.textContent = `Name: ${emplo.fullName} - ID: ${emplo.employeeID}`
 
-    let p2 =document.createElement('p');
+    let p2 = document.createElement('p');
     div.appendChild(p2);
-    p2.textContent =`Depertment: ${this.department} - Level: ${this.level}`
+    p2.textContent = `Depertment: ${emplo.department} - Level: ${emplo.level}`
 
-    let p3 =document.createElement('p');
+    let p3 = document.createElement('p');
     div.appendChild(p3);
-    p3.textContent= `${this.salary}`
+    p3.textContent = `${emplo.salary}`
+
+}
 
 }
 
 
-
-
-function handelSubmit(event){
+function handelSubmit(event) {
     event.preventDefault();
     let fullName = event.target.name.value;
 
@@ -71,21 +89,66 @@ function handelSubmit(event){
     let department = event.target.department.value;
 
     let level = event.target.level.value;
-    
+
     let imgurl = event.target.imgurl.value;
 
-    let newEmplouee = new employee(0,fullName, department, level, imgurl);
+    let newEmplouee = new employee(0, fullName, department, level, imgurl);
 
     newEmplouee.newEmployeeID();
     newEmplouee.newSalary();
-    newEmplouee.render();
+    // newEmplouee.render();
+
+    employees.push(newEmplouee);
+
+    let jsonArr = toJSON();
+
+
+    saveToLocalS(jsonArr);
+
+    render(readFromLocalS());
+
 }
 
+function readFromLocalS(){
+    let gitArr = localStorage.getItem('employees')
+    let arr = JSON.parse(gitArr); // to conveart frome json to array
+    
+    if(arr !== null){   //  ??
+        return arr;
+    }else{
+        return[];
+    }
+
+}
 
 function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+
+
+function saveToLocalS(jsonArr){
+    localStorage.setItem('employees', jsonArr)
+}
+
+
+
+function toJSON(){
+    let jsonArray = JSON.stringify(employees);// to conveart frome Array to json
+    return jsonArray;
+}
+
+
+function checkLocalAndPush(){
+    if(employees.length == 0){
+        let arr = readFromLocalS();
+        if (arr.length != 0){
+            employees =arr;
+        }
+    }
+}
+
+render(readFromLocalS());
 employeeForm.addEventListener('submit', handelSubmit);
 
 
